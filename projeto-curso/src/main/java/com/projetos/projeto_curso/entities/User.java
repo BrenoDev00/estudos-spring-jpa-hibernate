@@ -1,10 +1,10 @@
 package com.projetos.projeto_curso.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "\"user\"")
@@ -16,6 +16,12 @@ public class User {
     private String email;
     private String phone;
     private String password;
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+    public User() {
+    }
 
     public User(Long id, String name, String email, String phone, String password) {
         this.id = id;
@@ -63,5 +69,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return this.orders;
     }
 }
