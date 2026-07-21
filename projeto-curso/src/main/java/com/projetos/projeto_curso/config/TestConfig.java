@@ -1,8 +1,10 @@
 package com.projetos.projeto_curso.config;
 
+import com.projetos.projeto_curso.entities.Category;
 import com.projetos.projeto_curso.entities.Order;
 import com.projetos.projeto_curso.entities.User;
 import com.projetos.projeto_curso.enums.OrderStatus;
+import com.projetos.projeto_curso.repositories.CategoryRepository;
 import com.projetos.projeto_curso.repositories.OrderRepository;
 import com.projetos.projeto_curso.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +18,12 @@ import java.util.Arrays;
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) {
@@ -34,7 +36,13 @@ public class TestConfig implements CommandLineRunner {
         Order orderTwo = new Order(null, Instant.now(), OrderStatus.CANCELED, userOne);
         Order orderThree = new Order(null, Instant.now(), OrderStatus.DELIVERED, userTwo);
 
+        // Instâncias de categorias
+        Category categoryOne = new Category(null, "Electronics");
+        Category categoryTwo = new Category(null, "Books");
+        Category categoryThree = new Category(null, "Computers");
+
         userRepository.saveAll(Arrays.asList(userOne, userTwo));
         orderRepository.saveAll(Arrays.asList(orderOne, orderTwo, orderThree));
+        categoryRepository.saveAll(Arrays.asList(categoryOne, categoryTwo, categoryThree));
     }
 }
